@@ -41,6 +41,9 @@ final class Notif {
                 .setSmallIcon(android.R.drawable.ic_media_play)
                 .setContentTitle(paused ? "mpv 已暂停" : "mpv 播放中")
                 .setContentText(url)
+                .setContentIntent(PendingIntent.getActivity(c, 3,
+                        new Intent(c, ControlActivity.class),
+                        PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT))
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
                 .addAction(toggle)

@@ -35,7 +35,18 @@ final class Termux {
                         "_", json, SOCK});
     }
 
+    static void seek(Context c, int secs) {
+        sendMpv(c, "{\"command\":[\"seek\"," + secs + ",\"relative\"]}");
+    }
+
+    static void pauseToggle(Context c) {
+        sendMpv(c, "{\"command\":[\"cycle\",\"pause\"]}");
+    }
+
+    /** 先让 mpv 自己退出，1 秒后再 pkill mpv 兜底 */
     static void stop(Context c) {
-        run(c, BIN + "pkill", new String[]{"-x", "mpv"});
+        String script = "printf '%s\\n' '{\"command\":[\"quit\"]}' | " + BIN
+                + "socat - \"UNIX-CONNECT:$1\"; sleep 1; " + BIN + "pkill mpv";
+        run(c, BIN + "timeout", new String[]{"5", BIN + "bash", "-c", script, "_", SOCK});
     }
 }

@@ -4,7 +4,7 @@
 - 注册为 http/https 链接处理者（Linksheet 才会把它当浏览器列出）。
 - 链接是音频（m3u8/m3u/m4a/mp3/aac/flac/ogg/opus/wav/pls）-> 交给 Termux 的 mpv 只播声音。
 - 其他链接 -> 自动转给 Chrome/Brave/Firefox 等浏览器（MainActivity.BROWSERS 可改）。
-- 通知栏有「暂停/继续」「停止」按钮；播完或停止后通知自动消失。
+- 通知栏有「暂停/继续」「停止」按钮；点通知本体弹出控制面板（±10秒/±1分/±5分、暂停、停止）；播完或停止后通知自动消失。
 - 再点新链接会先停掉旧的 mpv。
 
 Termux 里（一次性）

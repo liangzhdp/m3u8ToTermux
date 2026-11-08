@@ -30,6 +30,13 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ControlActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" />
+
         <!-- exported：Termux 里的脚本播完后要用 am broadcast 通知它清除通知栏 -->
         <receiver android:name=".ControlReceiver" android:exported="true" />
     </application>

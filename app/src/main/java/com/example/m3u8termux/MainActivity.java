@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
             "set -x",
             "S=" + Termux.SOCK,
             "B=" + Termux.BIN,
-            "$B/pkill -x mpv; sleep 0.5",
+            "$B/pkill mpv; sleep 0.5",
             "rm -f \"$S\"",
             "$B/termux-wake-lock",
             "$B/mpv --no-video --ao=opensles --no-terminal --log-file=" + Termux.HOME
