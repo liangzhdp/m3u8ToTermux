@@ -11,8 +11,10 @@ Termux 里（一次性）
   mkdir -p ~/.termux
   echo "allow-external-apps=true" >> ~/.termux/termux.properties
   termux-reload-settings        # 然后完全关闭 Termux 再重开
-  pkg install mpv procps        # procps 提供 pkill / pgrep
+  pkg install mpv procps socat  # procps: pkill/pgrep；socat: 暂停/继续控制
 
 权限
   首次点链接会弹出：在 Termux 中执行命令、发送通知。
   如果灰掉：应用信息页右上角 ⋮ > 允许受限制的设置。
+
+排错：播放不出声时，在 Termux 执行  cat ~/m3u8termux.log ~/mpv.log

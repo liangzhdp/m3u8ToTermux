@@ -18,7 +18,7 @@ public class ControlReceiver extends BroadcastReceiver {
 
         switch (a) {
             case ACT_TOGGLE: {
-                Termux.sendMpv(c, "cycle pause");
+                Termux.sendMpv(c, "{\"command\":[\"cycle\",\"pause\"]}");
                 boolean paused = !sp.getBoolean("paused", false);
                 sp.edit().putBoolean("paused", paused).apply();
                 Notif.show(c, sp.getString("url", ""), paused);

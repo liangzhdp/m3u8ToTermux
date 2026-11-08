@@ -7,7 +7,7 @@ import android.widget.Toast;
 final class Termux {
     static final String HOME = "/data/data/com.termux/files/home";
     static final String BIN = "/data/data/com.termux/files/usr/bin/";
-    static final String FIFO = HOME + "/.mpv-fifo";
+    static final String SOCK = HOME + "/.mpv-sock";
 
     private Termux() {}
 
@@ -27,10 +27,12 @@ final class Termux {
         }
     }
 
-    /** 往 mpv 的 input-file FIFO 写一条命令，2 秒内没人读就放弃（mpv 已退出时） */
-    static void sendMpv(Context c, String cmd) {
+    /** 通过 mpv 的 IPC socket 发一条 JSON 命令（需要 Termux 装 socat），2 秒超时 */
+    static void sendMpv(Context c, String json) {
         run(c, BIN + "timeout",
-                new String[]{"2", BIN + "bash", "-c", "echo \"$1\" > " + FIFO, "_", cmd});
+                new String[]{"2", BIN + "bash", "-c",
+                        "printf '%s\\n' \"$1\" | " + BIN + "socat - \"UNIX-CONNECT:$2\"",
+                        "_", json, SOCK});
     }
 
     static void stop(Context c) {

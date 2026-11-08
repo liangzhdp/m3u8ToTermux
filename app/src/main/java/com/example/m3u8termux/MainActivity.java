@@ -29,12 +29,15 @@ public class MainActivity extends Activity {
             "com.opera.browser", "com.duckduckgo.mobile.android"};
 
     private static final String SCRIPT = String.join("\n",
-            "F=" + Termux.FIFO,
+            "exec >" + Termux.HOME + "/m3u8termux.log 2>&1",
+            "set -x",
+            "S=" + Termux.SOCK,
             "B=" + Termux.BIN,
-            "$B/pkill -x mpv 2>/dev/null; sleep 0.5",
-            "[ -p \"$F\" ] || { rm -f \"$F\"; $B/mkfifo \"$F\"; }",
+            "$B/pkill -x mpv; sleep 0.5",
+            "rm -f \"$S\"",
             "$B/termux-wake-lock",
-            "$B/mpv --no-video --ao=opensles --no-terminal --input-file=\"$F\" \"$1\"",
+            "$B/mpv --no-video --ao=opensles --no-terminal --log-file=" + Termux.HOME
+                    + "/mpv.log --input-ipc-server=\"$S\" \"$1\"",
             "$B/pgrep -x mpv >/dev/null || $B/termux-wake-unlock",
             "$B/am broadcast --user 0 -n com.example.m3u8termux/.ControlReceiver"
                     + " -a com.example.m3u8termux.ENDED --es id \"$2\" >/dev/null 2>&1");
