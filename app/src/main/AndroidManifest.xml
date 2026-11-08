@@ -2,9 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="com.termux.permission.RUN_COMMAND" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <queries>
         <package android:name="com.termux" />
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
     </queries>
 
     <application
@@ -21,9 +27,10 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http" />
                 <data android:scheme="https" />
-                <data android:host="*" />
-                <data android:pathPattern=".*\\.m3u8" />
             </intent-filter>
         </activity>
+
+        <!-- exported：Termux 里的脚本播完后要用 am broadcast 通知它清除通知栏 -->
+        <receiver android:name=".ControlReceiver" android:exported="true" />
     </application>
 </manifest>

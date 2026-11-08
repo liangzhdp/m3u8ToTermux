@@ -1,17 +1,18 @@
-构建：用 Android Studio 打开本文件夹 -> Build > Build APK(s)，安装 app-debug.apk。
+构建：推送到 GitHub，Actions 自动编译；或用 Android Studio 打开后 Build APK。
 
-一、Termux 里（只需一次）
+功能
+- 注册为 http/https 链接处理者（Linksheet 才会把它当浏览器列出）。
+- 链接是音频（m3u8/m3u/m4a/mp3/aac/flac/ogg/opus/wav/pls）-> 交给 Termux 的 mpv 只播声音。
+- 其他链接 -> 自动转给 Chrome/Brave/Firefox 等浏览器（MainActivity.BROWSERS 可改）。
+- 通知栏有「暂停/继续」「停止」按钮；播完或停止后通知自动消失。
+- 再点新链接会先停掉旧的 mpv。
+
+Termux 里（一次性）
   mkdir -p ~/.termux
   echo "allow-external-apps=true" >> ~/.termux/termux.properties
-  termux-reload-settings
-  （然后完全关闭 Termux 再重开）
+  termux-reload-settings        # 然后完全关闭 Termux 再重开
+  pkg install mpv procps        # procps 提供 pkill / pgrep
 
-二、本 App 权限
-  设置 > 应用 > mpv 音频播放 > 权限 > 「其他权限」里允许
-  「在 Termux 环境中运行命令」(Run commands in Termux environment)。
-  侧载 App 若灰掉：应用信息页右上角 ⋮ > 允许受限制的设置。
-
-三、Linksheet
-  拦截 m3u8 链接后，在选择列表里选「mpv 音频播放」。
-
-停止播放：在 Termux 执行  pkill mpv
+权限
+  首次点链接会弹出：在 Termux 中执行命令、发送通知。
+  如果灰掉：应用信息页右上角 ⋮ > 允许受限制的设置。
